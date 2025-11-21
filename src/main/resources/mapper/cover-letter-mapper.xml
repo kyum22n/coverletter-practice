@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.CoverLetterDao">
+  <insert id="insert" parameterType="com.example.demo.dto.entity.CoverLetterEntity">
+      INSERT INTO cover_letter
+      (user_id, support_motive, growth_experience, job_capability, future_plan, ai_feedback)
+      VALUES
+      (#{userId}, #{supportMotive}, #{growthExperience}, #{jobCapability}, #{futurePlan},
+      CAST(#{aiFeedback} AS JSONB))
+  </insert>
+
+  <select id="findById" resultType="com.example.demo.dto.entity.CoverLetterEntity">
+      SELECT *
+      FROM cover_letter
+      WHERE cover_letter_id = #{id}
+  </select>
+
+  <select id="findFeedbackField" resultType="string">
+    SELECT ai_feedback ->> #{field}
+    FROM cover_letter
+    WHERE cover_letter_id = #{id}
+  </select>
+
+</mapper>
